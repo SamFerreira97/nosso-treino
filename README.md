@@ -2,7 +2,7 @@
 
 Aplicativo de musculação para casal, adaptado da nova interface enviada pelo usuário e da ficha real do Treinador David.
 
-**Site público:** https://nosso-treino-juntos-2026.samuelsillas97.chatgpt.site
+**Site público:** https://samferreira97.github.io/nosso-treino/
 
 ## Usar em dois celulares
 
@@ -79,3 +79,11 @@ Nenhum dado pessoal de treino, código de acesso, banco local ou credencial faz 
 Fontes: yuhonas/free-exercise-db, distribuído pelo projeto como domínio público/Unlicense. As fotos foram mantidas sem recorte ou alteração da postura. Os GIFs alternam os dois quadros originais, a cada 1100 ms; esse intervalo é ilustrativo e não prescreve cadência. A prancha usa a foto da sustentação estática, sem movimento artificial.
 
 Os 36 mapeamentos, incluindo avisos de variante e equipamento não informado, estão em public/demos.json; fontes e licença estão em public/demos/sources.json e SOURCE-LICENSE.txt. Imagens locais, carregamento sob demanda, pausa real capturando o quadro exibido e respeito à preferência de movimento reduzido. Para regenerar: node scripts/prepare-demos.mjs (requer acesso à fonte).
+
+## GitHub Pages
+
+A interface e as demonstrações são publicadas no GitHub Pages por .github/workflows/pages.yml. O script node scripts/export-pages.mjs gera pages-dist sem instalar dependências. Use GitHub Actions como fonte em Settings → Pages.
+
+A sincronização continua no servidor Workers/D1 existente. O cliente usa a API indicada pelo metadado sync-api; o servidor permite CORS somente para a origem GitHub Pages deste usuário, além da origem do próprio servidor. Não há chaves privadas no workflow.
+
+O novo endereço possui armazenamento local separado. Para trazer registros antigos, use o mesmo código do casal ou gere um backup por texto no endereço anterior e restaure em Histórico no novo endereço.

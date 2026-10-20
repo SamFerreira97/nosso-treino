@@ -46,3 +46,11 @@ test('plan preserves descending reps, ranges, time and unilateral counts; backup
 test('creation rate is bounded and room code is never stored in database payload',async()=>{
   const db=database();for(let i=0;i<10;i++)assert.equal((await call(db,'POST',{action:'create'})).status,201);assert.equal((await call(db,'POST',{action:'create'})).status,429);
 });
+test('GitHub Pages origin can preflight and synchronize while other origins stay blocked',async()=>{
+  const db=database(),origin='https://samferreira97.github.io';
+  const preflight=await handleSync(new Request('https://test.local/api/sync',{method:'OPTIONS',headers:{Origin:origin,'Access-Control-Request-Method':'POST','Access-Control-Request-Headers':'authorization,content-type'}}),db);
+  assert.equal(preflight.status,204);assert.equal(preflight.headers.get('Access-Control-Allow-Origin'),origin);assert.match(preflight.headers.get('Access-Control-Allow-Headers'),/Authorization/);
+  const blocked=await handleSync(new Request('https://test.local/api/sync',{method:'OPTIONS',headers:{Origin:'https://elsewhere.github.io'}}),db);assert.equal(blocked.status,403);assert.equal(blocked.headers.get('Access-Control-Allow-Origin'),null);
+  const created=await call(db,'POST',{action:'create'},null,0,origin);assert.equal(created.status,201);
+  const authenticated=await handleSync(new Request('https://test.local/api/sync',{headers:{Origin:origin,Authorization:'Bearer '+created.data.code}}),db);assert.equal(authenticated.status,200);assert.equal(authenticated.headers.get('Access-Control-Allow-Origin'),origin);
+});
