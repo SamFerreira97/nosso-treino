@@ -1,0 +1,362 @@
+[
+  {
+    "name": "Desenvolvimento com Halteres",
+    "id": "Dumbbell_Shoulder_Press",
+    "variant": "Exemplo sentado com halteres",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shoulder_Press/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Supino Inclinado Halter",
+    "id": "Incline_Dumbbell_Press",
+    "variant": "Halteres · banco inclinado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Supino Reto com Barra",
+    "id": "Barbell_Bench_Press_-_Medium_Grip",
+    "variant": "Barra · banco reto",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Crucifixo Reto",
+    "id": "Dumbbell_Flyes",
+    "variant": "Exemplo com halteres; equipamento não informado na ficha",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Flyes/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Elevação Lateral",
+    "id": "Side_Lateral_Raise",
+    "variant": "Exemplo em pé com halteres; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Tríceps Testa",
+    "id": "Lying_Triceps_Press",
+    "variant": "Exemplo com barra EZ; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Triceps_Press/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Tríceps Pulley",
+    "id": "Triceps_Pushdown",
+    "variant": "Exemplo na polia com barra; acessório não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Puxada Frontal",
+    "id": "Wide-Grip_Lat_Pulldown",
+    "variant": "Exemplo pela frente com pegada aberta; pegada não informada",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Lat_Pulldown/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Remada Curvada",
+    "id": "Bent_Over_Barbell_Row",
+    "variant": "Exemplo com barra; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Remada Unilateral",
+    "id": "One-Arm_Dumbbell_Row",
+    "variant": "Exemplo com halter e apoio; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Pullover",
+    "id": "Straight-Arm_Dumbbell_Pullover",
+    "variant": "Exemplo deitado com halter; variante não informada",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Straight-Arm_Dumbbell_Pullover/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Rosca Direta Barra",
+    "id": "Barbell_Curl",
+    "variant": "Barra · em pé",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Rosca Martelo",
+    "id": "Hammer_Curls",
+    "variant": "Exemplo com halteres; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Rosca Scott",
+    "id": "Preacher_Curl",
+    "variant": "Exemplo no banco Scott com barra EZ",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Preacher_Curl/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Agachamento Livre",
+    "id": "Barbell_Squat",
+    "variant": "Exemplo com barra; carga e equipamento não informados",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Squat/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Leg Press 45°",
+    "id": "Leg_Press",
+    "variant": "Leg press inclinado · plataforma",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Press/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Cadeira Extensora",
+    "id": "Leg_Extensions",
+    "variant": "Cadeira extensora",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Extensions/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Mesa Flexora",
+    "id": "Lying_Leg_Curls",
+    "variant": "Mesa flexora · deitado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Leg_Curls/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Stiff",
+    "id": "Stiff-Legged_Barbell_Deadlift",
+    "variant": "Exemplo com barra; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Stiff-Legged_Barbell_Deadlift/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Elevação Pélvica",
+    "id": "Barbell_Hip_Thrust",
+    "variant": "Exemplo com barra e banco; apoios não informados",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Hip_Thrust/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Panturrilha em Pé",
+    "id": "Standing_Calf_Raises",
+    "variant": "Exemplo em máquina; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Supino Inclinado Barra",
+    "id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "variant": "Barra · banco inclinado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Incline_Bench_Press_-_Medium_Grip/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Supino Reto Halteres",
+    "id": "Dumbbell_Bench_Press",
+    "variant": "Halteres · banco reto",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Desenvolvimento Militar",
+    "id": "Standing_Military_Press",
+    "variant": "Exemplo em pé com barra; posição não informada",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Military_Press/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Cross Over",
+    "id": "Cable_Crossover",
+    "variant": "Exemplo com polias altas; altura não informada",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Elevação Frontal",
+    "id": "Front_Two-Dumbbell_Raise",
+    "variant": "Exemplo com dois halteres; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Front_Two-Dumbbell_Raise/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Tríceps Francês",
+    "id": "Seated_Triceps_Press",
+    "variant": "Exemplo sentado com um halter; variante não informada",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Triceps_Press/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Remada Cavalinho",
+    "id": "T-Bar_Row_with_Handle",
+    "variant": "Barra T · puxador",
+    "width": 500,
+    "height": 750,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/T-Bar_Row_with_Handle/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Barra Fixa ou Graviton",
+    "id": "Pullups",
+    "variant": "Demonstração da opção barra fixa; Graviton também consta na ficha",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pullups/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Tríceps Corda",
+    "id": "Triceps_Pushdown_-_Rope_Attachment",
+    "variant": "Polia alta · corda",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown_-_Rope_Attachment/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Puxada Triângulo",
+    "id": "V-Bar_Pulldown",
+    "variant": "Polia alta · triângulo",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/V-Bar_Pulldown/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Prancha",
+    "id": "Plank",
+    "variant": "Postura estática sobre antebraços · sustente sem alternar pernas",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/1.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 1
+  },
+  {
+    "name": "Rosca Concentrada",
+    "id": "Concentration_Curls",
+    "variant": "Exemplo sentado com halter; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Concentration_Curls/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Rosca Alternada",
+    "id": "Dumbbell_Alternate_Bicep_Curl",
+    "variant": "Exemplo com halteres; equipamento não informado",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Alternate_Bicep_Curl/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Crucifixo Inverso",
+    "id": "Reverse_Flyes",
+    "variant": "Exemplo com halteres e apoio inclinado; variante não informada",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Flyes/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  },
+  {
+    "name": "Abdominal Bicicleta",
+    "id": "Air_Bike",
+    "variant": "Solo · alternância entre os lados",
+    "width": 850,
+    "height": 567,
+    "source": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Air_Bike/0.jpg",
+    "license": "Unlicense / public domain (as distributed by source)",
+    "frames": 2
+  }
+]
