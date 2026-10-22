@@ -18,7 +18,7 @@ test('HTML declara instalação e app registra SW',()=>{
  const html=readFileSync(new URL('../ui/index.html',import.meta.url),'utf8');
  assert.match(html,/rel="manifest" href="\.\/manifest\.webmanifest"/);
  assert.match(html,/rel="apple-touch-icon" href="\.\/icons\/apple-touch-icon\.png"/);
- assert.match(read('app.js'),/serviceWorker\.register\('\.\/sw\.js'\)/);
+ assert.match(read('app.js'),/serviceWorker\.register\('\.\/sw\.js'/);
 });
 test('SW protege API e pré-cacheia arquivos existentes',()=>{
  const sw=read('sw.js');
@@ -41,8 +41,8 @@ test('Publicação sem GIFs pesados e dentro do limite de 8 MB',()=>{
 
 test('Novo avatar do Sam e recursos versionados evitam cache antigo',()=>{
  const html=readFileSync(new URL('../ui/index.html',import.meta.url),'utf8');
- assert.match(html,/style\\.css\\?v=sam-avatar-3/);
- assert.match(html,/app\\.js\\?v=sam-avatar-3/);
+ assert.match(html,/style\.css\?v=sam-avatar-3/);
+ assert.match(html,/app\.js\?v=sam-avatar-3/);
  const app=read('app.js');
  assert.equal((app.match(/sam-avatar-v3/g)||[]).length,3);
  assert.ok(exists('avatars/sam-avatar-v3.webp'));
