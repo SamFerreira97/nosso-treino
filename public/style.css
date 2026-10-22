@@ -110,3 +110,16 @@ nav button.on{box-shadow:0 4px 12px rgba(232,69,60,.15)}
 @media(min-width:960px){main{max-width:1020px}.exercise-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.exercise-list>.card{margin-bottom:0}.exercise-list .set{grid-template-columns:34px minmax(0,1fr) minmax(0,1fr) 42px;gap:6px}.exercise-list .set-head{grid-template-columns:34px 1fr 1fr 42px;gap:6px}.exercise-list .demo-preview img{width:80px}.footer-actions{max-width:470px;margin:24px auto 0}}
 @media(max-width:430px){main{padding:14px 12px}.card{padding:14px;border-radius:17px}.week-overview{padding:0}.week-overview .weektitle{padding:14px}.week-overview .weektitle small{font-size:10px}.training-tools{align-items:stretch;flex-direction:column;gap:6px}.training-tools .go-next{max-width:none;width:100%}.training-tools .small{text-align:center}.exercise-links{grid-template-columns:1fr}.set{grid-template-columns:33px minmax(0,1fr) minmax(0,1fr) 42px;gap:5px}.set-head{grid-template-columns:33px minmax(0,1fr) minmax(0,1fr) 42px;gap:5px;font-size:9px}.set input{padding:8px;font-size:14px}.exercise-heading h2{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.week-chevron,.btn,.chip,nav button{transition:none!important}}
+
+/* Avatares do casal: Sam (perfil 1) e Gabi (perfil 2) */
+.profiles{gap:12px}
+.profiles .chip{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 12px;min-width:0;text-align:left;border-radius:16px;min-height:70px}
+.profile-avatar{display:block;width:46px;height:46px;flex:0 0 46px;object-fit:cover;border-radius:50%;border:2px solid var(--bd);background:var(--bg)}
+.profiles .chip.on .profile-avatar{border-color:rgba(255,255,255,.95)}
+.profile-copy{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.profile-copy strong{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.profile-copy small{font-size:11px;font-weight:500;opacity:.8;margin-top:5px}
+.profile-field-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.profile-field-head img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--bd)}
+.profile-field-head strong{font-size:13px;color:var(--tx)}
+@media(max-width:380px){.profiles{gap:7px}.profiles .chip{gap:7px;padding:8px;min-height:62px}.profile-avatar{width:38px;height:38px;flex-basis:38px}.profile-copy strong{font-size:13px}.profile-copy small{font-size:10px}}
