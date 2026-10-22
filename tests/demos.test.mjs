@@ -11,8 +11,8 @@ test('all 36 original exercises have an exact media mapping and retained attribu
   for(const [name,id]of mapping){
     const poster=await sharp(readFileSync(new URL('demos/'+id+'.jpg',root))).metadata();assert.ok(poster.width>=500,name);
     if(id==='Plank')continue;
-    const gif=await sharp(readFileSync(new URL('demos/'+id+'.gif',root)),{animated:true}).metadata();
-    assert.equal(gif.pages,2,name);assert.deepEqual(gif.delay,[1100,1100]);assert.equal(gif.loop,0);
-    assert.ok(existsSync(new URL('demos/'+id+'-1.jpg',root)),name);
+    const second=await sharp(readFileSync(new URL('demos/'+id+'-1.jpg',root))).metadata();
+    assert.ok(second.width>=500,name);assert.equal(second.width,poster.width,name);assert.equal(second.height,poster.height,name);
+    assert.ok(!existsSync(new URL('demos/'+id+'.gif',root)),name);
   }
 });

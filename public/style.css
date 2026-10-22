@@ -190,3 +190,17 @@ nav button.on{box-shadow:0 4px 12px rgba(232,69,60,.15)}
   .rank-day-dot{width:17px;height:17px;font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.rank-track span{transition:none}}
+
+/* Contraste WCAG AA, objetivos de toque e foco do teclado */
+:root{--ac:#d4352c;--on-ac:#fff;--on-ac2:#fff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--ac:#ff695f;--on-ac:#11151c;--on-ac2:#11151c}}
+:root[data-theme="dark"]{--ac:#ff695f;--on-ac:#11151c;--on-ac2:#11151c}
+nav button.on,.chip.on,.btn:not(.s),.rank-periods button.on{color:var(--on-ac)}
+.set.done .ck{color:var(--on-ac2)}
+.rank-day-dot.done.person-1{background:#be185d;border-color:#be185d;color:#fff}
+.rank-legend i.person-1{background:#be185d}
+button,select,summary,input:not([type="checkbox"]):not([type="radio"]){min-height:44px}
+.ck{min-width:44px}
+.instruction summary,.record summary,.exercise-index>summary,.rank-periods button{min-height:44px}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.btn:focus-visible,nav button.on:focus-visible,.set.done .ck:focus-visible{outline-color:var(--tx)}

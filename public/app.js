@@ -76,7 +76,7 @@ function exerciseCard(ex,index,finished){const previousMax=best(ex),logs=[];let 
   }
   const nk=noteKey({date:dateKey(),person:who,day,exerciseId:ex.id}),note=store.items[nk];
   const demo=DEMOS.find(d=>d[0]===ex.name);
-  return `<article id="exercise-${index}" class="card exercise ${logs.length===ex.sets?'exercise-complete':''}" data-index="${index}"><div class="exercise-heading"><h2>${String(index+1).padStart(2,'0')} · ${esc(ex.name)}</h2><span class="exercise-count">${logs.length}/${ex.sets} séries</span></div><div class="mu">${ex.sets} × ${esc(ex.reps)}${unit==='s'?'':' repetições'}${ex.perSet?' · sequência por série':''}</div>${demo?`<button class="demo-preview" data-demo="${index}" aria-label="Ver demonstração de ${esc(ex.name)}"><img src="./demos/${demo[1]}.jpg" alt="Posição de ${esc(ex.name)}" width="100" height="70" loading="lazy" decoding="async"><span><strong>${demo[1]==='Plank'?'Ver postura estática':'▶ Ver GIF do exercício'}</strong><small>${guide?esc(guide[0]):'Execução'} · toque para ampliar</small></span><span aria-hidden="true">↗</span></button>`:'<p class="hint">Demonstração ainda não cadastrada para este exercício personalizado.</p>'}<div class="set-head"><span>SÉRIE</span><span>CARGA · KG</span><span>${unit==='s'?'TEMPO · S':'REPETIÇÕES'}</span><span>✓</span></div>${h}<div class="hint">${previousMax?`Máxima anterior: ${previousMax} kg`:'Primeiro registro deste exercício.'} <span class="pr">${previousMax&&logs.some(l=>l.weight>previousMax)?'🏆 Recorde!':''}</span></div><label class="hint">Observações pessoais<textarea class="note" data-note="${index}" maxlength="2000" placeholder="Como foi o exercício?">${esc(note?.text||'')}</textarea></label>${guide?`<details class="instruction"><summary>Execução e cuidados ▾</summary><ol><li>${guide[1]}</li><li>${guide[2]}</li><li>${guide[3]}</li></ol><p>${guide[4]}</p><p>Respire continuamente; solte o ar no esforço. Use amplitude confortável, sem dor.</p><p>Equipamento: ${esc(original[4])}. Descanso geral da ficha: 60–90 s.</p><p>Orientações educativas complementares. Confirme as variantes com o treinador.</p></details>`:''}</article>`;
+  return `<article id="exercise-${index}" class="card exercise ${logs.length===ex.sets?'exercise-complete':''}" data-index="${index}"><div class="exercise-heading"><h2>${String(index+1).padStart(2,'0')} · ${esc(ex.name)}</h2><span class="exercise-count">${logs.length}/${ex.sets} séries</span></div><div class="mu">${ex.sets} × ${esc(ex.reps)}${unit==='s'?'':' repetições'}${ex.perSet?' · sequência por série':''}</div>${demo?`<button class="demo-preview" data-demo="${index}" aria-label="Ver demonstração de ${esc(ex.name)}"><img src="./demos/${demo[1]}.jpg" alt="Posição de ${esc(ex.name)}" width="100" height="70" loading="lazy" decoding="async"><span><strong>${demo[1]==='Plank'?'Ver postura estática':'▶ Ver demonstração do exercício'}</strong><small>${guide?esc(guide[0]):'Execução'} · toque para ampliar</small></span><span aria-hidden="true">↗</span></button>`:'<p class="hint">Demonstração ainda não cadastrada para este exercício personalizado.</p>'}<div class="set-head"><span>SÉRIE</span><span>CARGA · KG</span><span>${unit==='s'?'TEMPO · S':'REPETIÇÕES'}</span><span>✓</span></div>${h}<div class="hint">${previousMax?`Máxima anterior: ${previousMax} kg`:'Primeiro registro deste exercício.'} <span class="pr">${previousMax&&logs.some(l=>l.weight>previousMax)?'🏆 Recorde!':''}</span></div><label class="hint">Observações pessoais<textarea class="note" data-note="${index}" maxlength="2000" placeholder="Como foi o exercício?">${esc(note?.text||'')}</textarea></label>${guide?`<details class="instruction"><summary>Execução e cuidados ▾</summary><ol><li>${guide[1]}</li><li>${guide[2]}</li><li>${guide[3]}</li></ol><p>${guide[4]}</p><p>Respire continuamente; solte o ar no esforço. Use amplitude confortável, sem dor.</p><p>Equipamento: ${esc(original[4])}. Descanso geral da ficha: 60–90 s.</p><p>Orientações educativas complementares. Confirme as variantes com o treinador.</p></details>`:''}</article>`;
 }
 function ranking(){
   const names=setting('names'),scores=calculateRanking(items('session'),names,setting('goal'),rankingPeriod);
@@ -253,19 +253,43 @@ function showDemo(ex){
   const demo=DEMOS.find(d=>d[0]===ex.name);if(!demo)return;
   demoCurrent=demo;const still=demo[1]==='Plank',reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   $('#exercise-demo-title').textContent=ex.name;
-  $('#exercise-demo-content').innerHTML=`<div class="demo-stage"><img id="demo-full" src="./demos/${demo[1]}.jpg" alt="${esc(ex.name)}: ${still?'postura estática':'demonstração em duas posições'}" decoding="async"></div><p class="demo-variant">${esc(demo[2])}</p><p class="hint">${still?'A prancha é uma sustentação estática. Mantenha a postura durante o tempo indicado.':'GIF em duas posições reais: início e final. O intervalo entre os quadros não indica a velocidade de execução.'}</p><div class="row demo-controls">${!still?`<button class="btn" id="demo-play">▶ Reproduzir GIF</button><button class="btn s" id="demo-steps">Ver posições lado a lado</button>`:''}</div><p id="demo-load-status" class="hint" role="status"></p><p class="hint">Imagens: <a class="link" href="https://github.com/yuhonas/free-exercise-db/tree/main/exercises/${demo[1]}" target="_blank" rel="noopener">Free Exercise DB ↗</a> · <a class="link" href="./demos/SOURCE-LICENSE.txt" target="_blank">Unlicense</a>. Confirme a variante com o treinador.</p>`;
+  $('#exercise-demo-content').innerHTML=`<div class="demo-stage"><img id="demo-full" src="./demos/${demo[1]}.jpg" alt="${esc(ex.name)}: ${still?'postura estática':'demonstração em duas posições'}" decoding="async"></div><p class="demo-variant">${esc(demo[2])}</p><p class="hint">${still?'A prancha é uma sustentação estática. Mantenha a postura durante o tempo indicado.':'Animação em duas posições reais: início e final. O intervalo entre os quadros não indica a velocidade de execução.'}</p><div class="row demo-controls">${!still?`<button class="btn" id="demo-play">▶ Reproduzir animação</button><button class="btn s" id="demo-steps">Ver posições lado a lado</button>`:''}</div><p id="demo-load-status" class="hint" role="status"></p><p class="hint">Imagens: <a class="link" href="https://github.com/yuhonas/free-exercise-db/tree/main/exercises/${demo[1]}" target="_blank" rel="noopener">Free Exercise DB ↗</a> · <a class="link" href="./demos/SOURCE-LICENSE.txt" target="_blank">Unlicense</a>. Confirme a variante com o treinador.</p>`;
   $('#demo-full').onerror=()=>{$('#demo-load-status').textContent='Não foi possível carregar a demonstração. Tente novamente ou consulte as instruções do exercício.';};
   $('#exercise-demo').showModal();demoPlaying=false;if(!still&&!reduced)playDemo();
 }
-function playDemo(){if(!demoCurrent||demoCurrent[1]==='Plank')return;const stage=$('#exercise-demo .demo-stage');stage.innerHTML=`<img id="demo-full" src="./demos/${demoCurrent[1]}.gif" alt="${esc(demoCurrent[0])}: GIF em duas posições" decoding="async">`;demoPlaying=true;$('#demo-play').textContent='Ⅱ Pausar GIF';$('#demo-steps').textContent='Ver posições lado a lado';$('#demo-full').onerror=()=>{$('#demo-load-status').textContent='Falha ao carregar o GIF. As instruções do exercício continuam disponíveis.';demoPlaying=false;};}
-function pauseDemo(){const img=$('#demo-full');if(!img||!demoCurrent)return;try{const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;canvas.getContext('2d').drawImage(img,0,0);img.src=canvas.toDataURL('image/png');}catch{img.src=`./demos/${demoCurrent[1]}.jpg`;}demoPlaying=false;if($('#demo-play'))$('#demo-play').textContent='▶ Reproduzir GIF';}
-$('#exercise-demo-content').onclick=e=>{const button=e.target.closest('button');if(button?.id==='demo-play'){if(demoPlaying)pauseDemo();else playDemo();}if(button?.id==='demo-steps'){demoPlaying=false;$('#demo-play').textContent='▶ Reproduzir GIF';$('#exercise-demo .demo-stage').innerHTML=`<div class="demo-two"><figure><img src="./demos/${demoCurrent[1]}.jpg" alt="Primeira posição de ${esc(demoCurrent[0])}"><figcaption>Posição 1</figcaption></figure><figure><img src="./demos/${demoCurrent[1]}-1.jpg" alt="Segunda posição de ${esc(demoCurrent[0])}"><figcaption>Posição 2</figcaption></figure></div>`;}};
+let demoTimer=null;
+function stopDemoTimer(){clearInterval(demoTimer);demoTimer=null;}
+function playDemo(){
+ if(!demoCurrent||demoCurrent[1]==='Plank')return;
+ stopDemoTimer();
+ const id=demoCurrent[1],stage=$('#exercise-demo .demo-stage');
+ stage.innerHTML=`<img id="demo-full" src="./demos/${id}.jpg" alt="${esc(demoCurrent[0])}: animação em duas posições" decoding="async">`;
+ demoPlaying=true;
+ $('#demo-play').textContent='Ⅱ Pausar animação';
+ $('#demo-steps').textContent='Ver posições lado a lado';
+ const img=$('#demo-full');
+ new Image().src=`./demos/${id}-1.jpg`;
+ img.onerror=()=>{stopDemoTimer();$('#demo-load-status').textContent='Falha ao carregar a demonstração. Consulte as instruções do exercício.';demoPlaying=false;};
+ let frame=0;
+ demoTimer=setInterval(()=>{frame=1-frame;img.src=`./demos/${id}${frame?'-1':''}.jpg`;},1100);
+}
+function pauseDemo(){stopDemoTimer();demoPlaying=false;if($('#demo-play'))$('#demo-play').textContent='▶ Reproduzir animação';}
+$('#exercise-demo-content').onclick=e=>{
+ const button=e.target.closest('button');
+ if(button?.id==='demo-play'){if(demoPlaying)pauseDemo();else playDemo();}
+ if(button?.id==='demo-steps'){
+  stopDemoTimer();demoPlaying=false;
+  $('#demo-play').textContent='▶ Reproduzir animação';
+  $('#exercise-demo .demo-stage').innerHTML=`<div class="demo-two"><figure><img src="./demos/${demoCurrent[1]}.jpg" alt="Primeira posição de ${esc(demoCurrent[0])}"><figcaption>Posição 1</figcaption></figure><figure><img src="./demos/${demoCurrent[1]}-1.jpg" alt="Segunda posição de ${esc(demoCurrent[0])}"><figcaption>Posição 2</figcaption></figure></div>`;
+ }
+};
 $('#exercise-demo .demo-close').onclick=()=>$('#exercise-demo').close();
-$('#exercise-demo').onclose=()=>{demoPlaying=false;$('#exercise-demo-content').innerHTML='';demoCurrent=null;};
+$('#exercise-demo').onclose=()=>{stopDemoTimer();demoPlaying=false;$('#exercise-demo-content').innerHTML='';demoCurrent=null;};
 $('#exercise-demo').onclick=e=>{if(e.target===$('#exercise-demo'))$('#exercise-demo').close();};
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&demoPlaying)pauseDemo();});
 function applyTheme(){if(theme==='auto')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=theme;$('#theme').setAttribute('aria-label','Tema '+({auto:'automático',light:'claro',dark:'escuro'}[theme])+'. Toque para mudar.');}
 $('#theme').onclick=()=>{theme=themes[(themes.indexOf(theme)+1)%3];try{localStorage.setItem('nosso-treino-theme',theme);}catch{}applyTheme();};
+if('serviceWorker' in navigator && ['https:','http:'].includes(location.protocol))window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{});});
 window.addEventListener('beforeunload',e=>{if(dirtyDraft){e.preventDefault();e.returnValue='';}});
 // Atualiza somente perfis com os nomes-padrão antigos; preserva nomes personalizados e os registros.
 const legacyNames=setting('names');
