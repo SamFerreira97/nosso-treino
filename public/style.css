@@ -204,3 +204,60 @@ button,select,summary,input:not([type="checkbox"]):not([type="radio"]){min-heigh
 .instruction summary,.record summary,.exercise-index>summary,.rank-periods button{min-height:44px}
 :focus-visible{outline:3px solid var(--ac);outline-offset:2px}
 .btn:focus-visible,nav button.on:focus-visible,.set.done .ck:focus-visible{outline-color:var(--tx)}
+
+/* Enquadramento mais aberto e centralizado do avatar do Sam.
+   A imagem original é quadrada e já tem um corte fechado; a moldura desfocada
+   amplia a área visível ao redor sem esticar o rosto. Gabi permanece inalterada. */
+.avatar-shell{
+ position:relative;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ isolation:isolate;
+ overflow:hidden;
+ border-radius:50%;
+ background:#b5c3d0;
+}
+.avatar-shell>img{
+ display:block;
+ position:relative;
+ z-index:1;
+ width:100%;
+ height:100%;
+ max-width:none;
+ object-fit:cover;
+ object-position:center center;
+ border:0;
+ border-radius:50%;
+ flex:0 0 auto;
+}
+.sam-avatar::before{
+ content:"";
+ position:absolute;
+ z-index:0;
+ inset:-8px;
+ background:url("./avatars/sam.webp") center center / cover no-repeat;
+ filter:blur(8px);
+ opacity:.78;
+}
+.avatar-shell.sam-avatar>img{
+ width:84%;
+ height:84%;
+ border-radius:50%;
+ object-position:50% 50%;
+}
+.profile-field-head .sheet-avatar{
+ width:40px;
+ height:40px;
+ flex:0 0 40px;
+ border:2px solid var(--bd);
+}
+.profile-field-head .avatar-shell>img{
+ width:100%;
+ height:100%;
+ border:0;
+}
+.profile-field-head .avatar-shell.sam-avatar>img{
+ width:84%;
+ height:84%;
+}
