@@ -4,7 +4,7 @@ import DEMOS from './demos-data.js';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const SYNC_URL=$('meta[name="sync-api"]')?.content||new URL('./api/sync',location.href).href;
 const KEY='nosso-treino-v3',DEFAULT_PLAN=PLAN.map((d,i)=>d[3].map(e=>`${dayCodes[i]}|${e[0]}|${e[1]}x${e[2]}`).join('\n')).join('\n');
-const defaults=()=>({'setting:names':['Pessoa 1','Pessoa 2'],'setting:plan':DEFAULT_PLAN,'setting:goal':[5,5],'setting:rest':90});
+const defaults=()=>({'setting:names':['Sam','Gabi'],'setting:plan':DEFAULT_PLAN,'setting:goal':[5,5],'setting:rest':90});
 let store={version:SCHEMA,items:defaults(),pending:[],room:null,drafts:{}};
 let migrationMessage='',storageOk=true;
 try{const raw=localStorage.getItem(KEY);if(raw){const s=JSON.parse(raw);validateBackup(s);store={...store,...s};if(!Array.isArray(store.pending))store.pending=[];if(store.room&&!/^[a-f0-9]{32}$/.test(store.room.code))store.room=null}else migrate();}catch{migrationMessage='Não foi possível ler os dados anteriores. Os arquivos originais no navegador foram preservados.';}
@@ -217,4 +217,9 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 function applyTheme(){if(theme==='auto')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=theme;$('#theme').setAttribute('aria-label','Tema '+({auto:'automático',light:'claro',dark:'escuro'}[theme])+'. Toque para mudar.');}
 $('#theme').onclick=()=>{theme=themes[(themes.indexOf(theme)+1)%3];try{localStorage.setItem('nosso-treino-theme',theme);}catch{}applyTheme();};
 window.addEventListener('beforeunload',e=>{if(dirtyDraft){e.preventDefault();e.returnValue='';}});
+// Atualiza somente perfis com os nomes-padrão antigos; preserva nomes personalizados e os registros.
+const legacyNames=setting('names');
+if(Array.isArray(legacyNames)&&legacyNames[0]==='Pessoa 1'&&legacyNames[1]==='Pessoa 2'){
+  operation('setting:names',['Sam','Gabi']);
+}
 applyTheme();render();persist();if(migrationMessage)notify(migrationMessage);sync();
