@@ -95,3 +95,7 @@ O novo endereço possui armazenamento local separado. Para trazer registros anti
 O site pode ser adicionado à tela inicial e, após o primeiro carregamento bem-sucedido, a interface pode abrir sem internet. As fotos são guardadas conforme usadas; demonstrações que ainda não foram abertas podem precisar de conexão. Os registros locais continuam disponíveis no navegador e são enviados à API do casal ao reconectar.
 
 O PWA utiliza `public/sw.js`, `public/manifest.webmanifest` e quatro ícones criados por `node scripts/make-icons.mjs` a partir do símbolo do site. `npm test` gera os ícones e verifica o manifesto, os arquivos em cache, os GIFs removidos e a meta de menos de 8 MB em `public/`. GitHub Actions executa testes antes de publicar. A política CSP no GitHub Pages é configurada por metadado HTML.
+
+### Enquadramento dos perfis
+
+A foto do Sam usa a versão `public/avatars/sam-avatar-v3.webp`, com rosto reduzido e centralizado em fundo suavizado. Ela substitui o avatar antigo nas abas Treino, Ranking e Ficha. Os recursos principais recebem parâmetros de versão para evitar reuso de CSS e JavaScript antigos no PWA; o service worker renova o cache.

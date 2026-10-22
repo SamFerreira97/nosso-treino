@@ -1,7 +1,7 @@
 // Shell offline do Nosso Treino: nenhuma requisição externa de sincronização é interceptada.
 // Rede primeiro para código; cache primeiro para fotografias e avatares.
-const SHELL='nosso-treino-shell-v2', MEDIA='nosso-treino-media-v2';
-const SHELL_URLS=['./','./style.css','./data.js','./model.js','./ranking.js','./app.js','./demos-data.js','./favicon.svg','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./icons/apple-touch-icon.png','./avatars/sam.webp','./avatars/gabi.webp'];
+const SHELL='nosso-treino-shell-v3', MEDIA='nosso-treino-media-v3';
+const SHELL_URLS=['./','./style.css','./data.js','./model.js','./ranking.js','./app.js','./demos-data.js','./favicon.svg','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./icons/apple-touch-icon.png','./avatars/sam-avatar-v3.webp','./avatars/gabi.webp'];
 self.addEventListener('install',event=>{
  event.waitUntil((async()=>{
   const cache=await caches.open(SHELL);
@@ -21,7 +21,7 @@ async function networkFirst(request,event){
  const cache=await caches.open(SHELL);
  try{
   const response=await Promise.race([
-   fetch(request),
+   fetch(request,{cache:'no-store'}),
    new Promise((_,reject)=>setTimeout(()=>reject(new Error('Timeout de rede')),4000))
   ]);
   if(response.ok)event.waitUntil(cache.put(request,response.clone()));

@@ -38,3 +38,14 @@ test('Publicação sem GIFs pesados e dentro do limite de 8 MB',()=>{
  const bytes=files.reduce((n,f)=>n+statSync(f).size,0);
  assert.ok(bytes<8*1024*1024,`public/ tem ${(bytes/1048576).toFixed(1)} MB`);
 });
+
+test('Novo avatar do Sam e recursos versionados evitam cache antigo',()=>{
+ const html=readFileSync(new URL('../ui/index.html',import.meta.url),'utf8');
+ assert.match(html,/style\\.css\\?v=sam-avatar-3/);
+ assert.match(html,/app\\.js\\?v=sam-avatar-3/);
+ const app=read('app.js');
+ assert.equal((app.match(/sam-avatar-v3/g)||[]).length,3);
+ assert.ok(exists('avatars/sam-avatar-v3.webp'));
+ assert.match(read('sw.js'),/nosso-treino-shell-v3/);
+ assert.match(read('sw.js'),/cache:'no-store'/);
+});

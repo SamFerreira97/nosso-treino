@@ -236,13 +236,13 @@ button,select,summary,input:not([type="checkbox"]):not([type="radio"]){min-heigh
  position:absolute;
  z-index:0;
  inset:-8px;
- background:url("./avatars/sam.webp") center center / cover no-repeat;
+ background:url("./avatars/sam-avatar-v3.webp") center center / cover no-repeat;
  filter:blur(8px);
  opacity:.78;
 }
 .avatar-shell.sam-avatar>img{
- width:84%;
- height:84%;
+ width:100%;
+ height:100%;
  border-radius:50%;
  object-position:50% 50%;
 }
@@ -258,6 +258,11 @@ button,select,summary,input:not([type="checkbox"]):not([type="radio"]){min-heigh
  border:0;
 }
 .profile-field-head .avatar-shell.sam-avatar>img{
- width:84%;
- height:84%;
+ width:100%;
+ height:100%;
 }
+
+/* Avatar atualizado do Sam: o próprio WebP contém mais espaço ao redor do rosto.
+   Não há ampliação por CSS. Imagem versionada impede reutilizar a miniatura antiga. */
+.sam-avatar::before{content:none}
+.avatar-shell.sam-avatar>img,.profile-field-head .avatar-shell.sam-avatar>img{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
