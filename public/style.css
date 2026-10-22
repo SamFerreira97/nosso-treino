@@ -123,3 +123,70 @@ nav button.on{box-shadow:0 4px 12px rgba(232,69,60,.15)}
 .profile-field-head img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--bd)}
 .profile-field-head strong{font-size:13px;color:var(--tx)}
 @media(max-width:380px){.profiles{gap:7px}.profiles .chip{gap:7px;padding:8px;min-height:62px}.profile-avatar{width:38px;height:38px;flex-basis:38px}.profile-copy strong{font-size:13px}.profile-copy small{font-size:10px}}
+
+/* Ranking do casal: pontuação por dia ativo e classificação compartilhada */
+#tabs{scrollbar-width:none}
+#tabs::-webkit-scrollbar{display:none}
+.rank-hero{position:relative;padding:23px 20px 19px;background:linear-gradient(135deg,var(--card) 28%,var(--bg) 100%);overflow:hidden}
+.rank-hero:before{content:"";position:absolute;right:-54px;top:-79px;width:190px;height:190px;border-radius:50%;background:var(--ac);opacity:.06;pointer-events:none}
+.rank-eyebrow{font-size:10px;letter-spacing:1.1px;font-weight:800;color:var(--ac);margin-bottom:10px}
+.rank-hero h2{font-size:clamp(1.3rem,4vw,1.8rem);line-height:1.25;margin-bottom:7px}
+.rank-hero>p{color:var(--mu);font-size:13px;margin:0 0 17px;max-width:55ch}
+.rank-periods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:5px;background:var(--bg);border:1px solid var(--bd);border-radius:14px}
+.rank-periods button{font:inherit;font-size:12px;font-weight:700;border:0;padding:10px 6px;border-radius:10px;background:transparent;color:var(--mu);cursor:pointer;min-height:43px}
+.rank-periods button.on{background:var(--ac);color:#fff;box-shadow:0 3px 10px rgba(232,69,60,.13)}
+.rank-date{font-size:12px;color:var(--mu);font-weight:600;margin-top:13px;text-align:center;text-transform:capitalize}
+.ranking-board{padding:20px}
+.ranking-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:17px}
+.ranking-heading h2{font-size:1.1rem;margin-bottom:3px}
+.ranking-heading .mu{margin:2px 0}
+.rank-total{background:var(--bg);border:1px solid var(--bd);padding:7px 10px;border-radius:14px;font-size:11px;color:var(--mu);white-space:nowrap;font-weight:700}
+.rank-person{display:flex;gap:12px;align-items:center;padding:17px 12px;border:1px solid var(--bd);border-radius:16px;margin:11px 0;background:var(--card);min-width:0}
+.rank-person.rank-leading{border-color:var(--ac);background:linear-gradient(100deg,var(--card),var(--bg))}
+.rank-place{font-size:19px;font-weight:850;color:var(--ac);min-width:33px;font-variant-numeric:tabular-nums;text-align:center}
+.rank-avatar{width:58px;height:58px;flex-shrink:0;object-fit:cover;border-radius:50%;border:2px solid var(--bd);background:var(--bg)}
+.rank-person-info{flex:1;min-width:0}
+.rank-person-info h3{font-size:16px;margin:0 0 4px;overflow-wrap:anywhere}
+.rank-person-info p{font-size:11px;color:var(--mu);margin:0 0 10px}
+.rank-track{height:8px;overflow:hidden;border-radius:10px;background:var(--bd)}
+.rank-track span{height:100%;border-radius:10px;background:var(--ac2);display:block;transition:width .2s}
+.rank-score{display:flex;flex-direction:column;align-items:center;min-width:48px}
+.rank-score strong{font-size:25px;line-height:1.1;font-variant-numeric:tabular-nums}
+.rank-score small{font-size:10px;color:var(--mu)}
+.rank-empty{color:var(--mu);font-size:13px;padding-top:7px}
+.ranking-calendar h2,.rank-rules h2{margin-bottom:8px}
+.ranking-calendar>p{margin:0 0 13px;font-size:12px}
+.rank-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+.rank-day{border:1px solid var(--bd);border-radius:13px;padding:10px 3px;display:flex;flex-direction:column;align-items:center;min-width:0;gap:4px}
+.rank-day.today{border-color:var(--ac)}
+.rank-day-label{font-size:10px;color:var(--mu)}
+.rank-day strong{font-size:14px}
+.rank-day-pair{display:flex;gap:4px;justify-content:center;padding-top:4px}
+.rank-day-dot{width:20px;height:20px;display:grid;place-items:center;color:var(--mu);border-radius:50%;background:var(--bg);border:1px solid var(--bd);font-size:12px;font-weight:700}
+.rank-day-dot.done.person-0{background:#2563eb;color:#fff;border-color:#2563eb}
+.rank-day-dot.done.person-1{background:#ec4899;color:#fff;border-color:#ec4899}
+.rank-legend{display:flex;justify-content:center;gap:18px;margin-top:13px;font-size:11px;color:var(--mu)}
+.rank-legend span{display:flex;align-items:center;gap:6px}
+.rank-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.rank-legend i.person-0{background:#2563eb}
+.rank-legend i.person-1{background:#ec4899}
+.rank-rules p{margin:8px 0;font-size:13px;line-height:1.55;color:var(--mu)}
+.rank-rules strong{color:var(--tx)}
+@media(max-width:500px){
+  #tabs{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:9px}
+  #tabs>button{flex:0 0 auto;min-width:75px;padding-inline:10px;font-size:12px}
+  .rank-person{padding:12px 7px;gap:8px}
+  .rank-place{font-size:16px;min-width:25px}
+  .rank-avatar{height:46px;width:46px}
+  .rank-person-info h3{font-size:14px}
+  .rank-person-info p{font-size:10px}
+  .rank-score{min-width:40px}
+  .rank-score strong{font-size:21px}
+  .rank-total{white-space:normal;text-align:center;max-width:100px}
+  .rank-days{gap:3px}
+  .rank-day{border-radius:9px;padding:8px 1px}
+  .rank-day-label{font-size:9px}
+  .rank-day-pair{gap:2px}
+  .rank-day-dot{width:17px;height:17px;font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.rank-track span{transition:none}}

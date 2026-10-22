@@ -17,6 +17,7 @@ Quem possui o código pode ler e alterar os registros do casal. Não há login i
 
 - Ficha real: 36 exercícios, cinco dias, com variações **A-volume** na quinta e **B-core** na sexta, sem substituir o programa por um ABC genérico.
 - Treino do dia, escolha de pessoa e treino, séries com carga e quantidade anteriores preenchidas.
+- Ranking do casal inspirado no modo Dias Ativos do GymRats, com 1 ponto por dia de treino concluído, classificações semanal, mensal e geral, empates e calendário semanal. É um ranking próprio, não uma integração com contas GymRats.
 - Perfis padrão **Sam** (usuário 1) e **Gabi** (usuário 2), com a ilustração enviada exibida no avatar da Gabi; cada um mantém seus registros separados.
 - Sequência 12–10–8–6 por série, repetições por lado e prancha em segundos preservadas.
 - Descanso automático, +15/−15 segundos, pular, bip e vibração quando suportados; solicitação de tela acesa durante o treino.

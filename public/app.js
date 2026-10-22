@@ -1,5 +1,6 @@
 import { SCHEMA,dayCodes,dateKey,normalize,parsePlan,validItem,validateBackup,applyRemote } from './model.js';
 import DEMOS from './demos-data.js';
+import { calculateRanking } from './ranking.js';
 
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const SYNC_URL=$('meta[name="sync-api"]')?.content||new URL('./api/sync',location.href).href;
@@ -8,6 +9,7 @@ const defaults=()=>({'setting:names':['Sam','Gabi'],'setting:plan':DEFAULT_PLAN,
 let store={version:SCHEMA,items:defaults(),pending:[],room:null,drafts:{}};
 let migrationMessage='',storageOk=true;
 try{const raw=localStorage.getItem(KEY);if(raw){const s=JSON.parse(raw);validateBackup(s);store={...store,...s};if(!Array.isArray(store.pending))store.pending=[];if(store.room&&!/^[a-f0-9]{32}$/.test(store.room.code))store.room=null}else migrate();}catch{migrationMessage='Não foi possível ler os dados anteriores. Os arquivos originais no navegador foram preservados.';}
+let rankingPeriod='week';
 let tab='treino',who=0,day=dayCodes[Math.max(0,Math.min(4,new Date().getDay()-1))],viewDate=dateKey();
 let dirtyDraft=false,busy=false,syncMessage='● Salvo neste aparelho',syncTimer=null,channel;
 const setting=k=>store.items['setting:'+k],items=prefix=>Object.entries(store.items).filter(([k,v])=>k.startsWith(prefix+':')&&v!==null).map(([,v])=>v);
@@ -53,9 +55,9 @@ function best(ex){return items('log').filter(l=>l.person===who&&normalize(l.exer
 function weekBounds(){const d=new Date();d.setDate(d.getDate()-(d.getDay()+6)%7);const start=dateKey(d);d.setDate(d.getDate()+7);return [start,dateKey(d)];}
 function render(preserve=false){
   const y=scrollY;const selectedChart=$('#chart-person')?.value,selectedExercise=$('#chart-exercise')?.value;
-  if(!$('#tabs').childElementCount)$('#tabs').innerHTML=[['treino','Treino'],['hist','Histórico'],['ficha','Ficha'],['sync','Conectar']].map(([k,label])=>`<button data-tab="${k}">${label}</button>`).join('');
+  if(!$('#tabs').childElementCount)$('#tabs').innerHTML=[['treino','Treino'],['ranking','🏆 Ranking'],['hist','Histórico'],['ficha','Ficha'],['sync','Conectar']].map(([k,label])=>`<button data-tab="${k}">${label}</button>`).join('');
   for(const button of $('#tabs').children){button.classList.toggle('on',button.dataset.tab===tab);button.setAttribute('aria-current',button.dataset.tab===tab?'page':'false');}
-  $('#view').innerHTML=tab==='treino'?training():tab==='hist'?history():tab==='ficha'?sheet():connection();
+  $('#view').innerHTML=tab==='treino'?training():tab==='ranking'?ranking():tab==='hist'?history():tab==='ficha'?sheet():connection();
   if(tab==='hist'){if(selectedChart)$('#chart-person').value=selectedChart;chartOptions(selectedExercise);}
   updateStatus();if(preserve)scrollTo(0,y);
 }
@@ -76,6 +78,53 @@ function exerciseCard(ex,index,finished){const previousMax=best(ex),logs=[];let 
   const demo=DEMOS.find(d=>d[0]===ex.name);
   return `<article id="exercise-${index}" class="card exercise ${logs.length===ex.sets?'exercise-complete':''}" data-index="${index}"><div class="exercise-heading"><h2>${String(index+1).padStart(2,'0')} · ${esc(ex.name)}</h2><span class="exercise-count">${logs.length}/${ex.sets} séries</span></div><div class="mu">${ex.sets} × ${esc(ex.reps)}${unit==='s'?'':' repetições'}${ex.perSet?' · sequência por série':''}</div>${demo?`<button class="demo-preview" data-demo="${index}" aria-label="Ver demonstração de ${esc(ex.name)}"><img src="./demos/${demo[1]}.jpg" alt="Posição de ${esc(ex.name)}" width="100" height="70" loading="lazy" decoding="async"><span><strong>${demo[1]==='Plank'?'Ver postura estática':'▶ Ver GIF do exercício'}</strong><small>${guide?esc(guide[0]):'Execução'} · toque para ampliar</small></span><span aria-hidden="true">↗</span></button>`:'<p class="hint">Demonstração ainda não cadastrada para este exercício personalizado.</p>'}<div class="set-head"><span>SÉRIE</span><span>CARGA · KG</span><span>${unit==='s'?'TEMPO · S':'REPETIÇÕES'}</span><span>✓</span></div>${h}<div class="hint">${previousMax?`Máxima anterior: ${previousMax} kg`:'Primeiro registro deste exercício.'} <span class="pr">${previousMax&&logs.some(l=>l.weight>previousMax)?'🏆 Recorde!':''}</span></div><label class="hint">Observações pessoais<textarea class="note" data-note="${index}" maxlength="2000" placeholder="Como foi o exercício?">${esc(note?.text||'')}</textarea></label>${guide?`<details class="instruction"><summary>Execução e cuidados ▾</summary><ol><li>${guide[1]}</li><li>${guide[2]}</li><li>${guide[3]}</li></ol><p>${guide[4]}</p><p>Respire continuamente; solte o ar no esforço. Use amplitude confortável, sem dor.</p><p>Equipamento: ${esc(original[4])}. Descanso geral da ficha: 60–90 s.</p><p>Orientações educativas complementares. Confirme as variantes com o treinador.</p></details>`:''}</article>`;
 }
+function ranking(){
+  const names=setting('names'),scores=calculateRanking(items('session'),names,setting('goal'),rankingPeriod);
+  const leaders=scores.members.filter(m=>m.points===scores.maxPoints);
+  const hasPoints=scores.maxPoints>0;
+  const winner=hasPoints?(leaders.length>1?'Empate no topo! 🤝':`${esc(leaders[0].name)} está na liderança! 🏆`):'O desafio começa com o primeiro treino!';
+  const firstLead=hasPoints&&leaders.length===1 ? leaders[0].person : null;
+  const controls=[['week','Esta semana'],['month','Este mês'],['all','Geral']]
+    .map(([value,label])=>`<button type="button" data-ranking-period="${value}" class="${rankingPeriod===value?'on':''}" aria-pressed="${rankingPeriod===value}">${label}</button>`).join('');
+  const cards=scores.members.map(m=>{
+    const goalText=rankingPeriod==='week'
+      ?`${m.points} de ${m.goal} dias da meta semanal`
+      :`${m.points} ${m.points===1?'dia ativo':'dias ativos'} no período`;
+    const width=scores.maxPoints?Math.round(m.points/scores.maxPoints*100):0;
+    return `<article class="rank-person ${m.person===firstLead?'rank-leading':''}">
+      <div class="rank-place" aria-label="${hasPoints?m.position+'ª posição':'Sem classificação ainda'}">${hasPoints?m.position+'º':'—'}</div>
+      <img class="rank-avatar" src="./avatars/${m.person===0?'sam':'gabi'}.webp" alt="" width="64" height="64" loading="lazy">
+      <div class="rank-person-info"><h3>${esc(m.name)} ${m.person===firstLead?'<span aria-label="Líder">👑</span>':''}</h3><p>${goalText}</p>
+        <div class="rank-track" role="progressbar" aria-label="Pontos de ${esc(m.name)}" aria-valuenow="${m.points}" aria-valuemin="0" aria-valuemax="${Math.max(scores.maxPoints,1)}"><span style="width:${width}%"></span></div>
+      </div>
+      <div class="rank-score"><strong>${m.points}</strong><small>${m.points===1?'ponto':'pontos'}</small></div>
+    </article>`;
+  }).join('');
+  let calendar='';
+  if(rankingPeriod==='week'){
+    const [year,month,dayNumber]=scores.start.split('-').map(Number);
+    const first=new Date(year,month-1,dayNumber);
+    const days=Array.from({length:7},(_,i)=>{
+      const dt=new Date(first.getFullYear(),first.getMonth(),first.getDate()+i);
+      const key=dateKey(dt);
+      const today=key===dateKey();
+      const markers=[0,1].map(p=>{
+        const member=scores.members.find(m=>m.person===p);
+        const done=member.dates.includes(key);
+        return `<span class="rank-day-dot ${done?'done person-'+p:''}" title="${esc(member.name)}: ${done?'treino concluído':'sem treino concluído'}" aria-label="${esc(member.name)}: ${done?'treino concluído':'sem treino concluído'}">${done?'✓':'·'}</span>`;
+      }).join('');
+      return `<div class="rank-day ${today?'today':''}"><span class="rank-day-label">${['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'][i]}</span><strong>${String(dt.getDate()).padStart(2,'0')}</strong><div class="rank-day-pair">${markers}</div></div>`;
+    }).join('');
+    calendar=`<section class="card ranking-calendar"><h2>Check-ins da semana</h2><p class="mu">Cada ✓ representa um dia de treino concluído de Sam ou Gabi.</p><div class="rank-days">${days}</div><div class="rank-legend"><span><i class="person-0"></i>${esc(names[0])}</span><span><i class="person-1"></i>${esc(names[1])}</span></div></section>`;
+  }
+  return `<section class="card rank-hero"><div class="rank-eyebrow">DESAFIO DO CASAL · INSPIRADO NO GYMRATS</div><h2>🏆 Ranking de ${esc(names[0])} e ${esc(names[1])}</h2><p>Juntos na evolução, com uma competição saudável pela constância.</p><div class="rank-periods" role="group" aria-label="Período do ranking">${controls}</div><div class="rank-date">${esc(scores.label)}</div></section>
+  <section class="card ranking-board"><div class="ranking-heading"><div><h2>Classificação</h2><p class="mu">${winner}</p></div><span class="rank-total">${scores.totalPoints} ${scores.totalPoints===1?'ponto':'pontos'} somados</span></div>
+  ${cards}
+  ${!hasPoints?'<p class="rank-empty">Concluam um treino na aba Treino para começar a pontuar. Treinos antigos já concluídos também entram no ranking.</p>':''}</section>
+  ${calendar}
+  <section class="card rank-rules"><h2>Como funciona a pontuação?</h2><p><strong>1 dia de treino concluído = 1 ponto.</strong> Se a mesma pessoa concluir dois treinos no mesmo dia, conta apenas um ponto. Sem pontos extras por carga, volume ou quantidade de séries.</p><p>O ranking é calculado automaticamente com o histórico de treinos, atualizado ao finalizar ou desfazer uma conclusão. Empates compartilham o primeiro lugar. A semana começa na segunda-feira, e o mês no dia 1º.</p><p class="mu">Este é um ranking do Nosso Treino inspirado no modo Dias Ativos do GymRats. Ele não acessa nem sincroniza dados da sua conta GymRats.</p></section>`;
+}
+
 function history(){const sessions=items('session').sort((a,b)=>b.finishedAt-a.finishedAt);return `<section class="card"><h2>Treinos concluídos</h2>${sessions.length?sessions.slice(0,100).map(s=>{const logs=items('log').filter(l=>l.date===s.date&&l.person===s.person&&l.day===s.day),notes=items('note').filter(l=>l.date===s.date&&l.person===s.person&&l.day===s.day);return `<article class="record"><div class="row"><strong style="flex:1">${esc(setting('names')[s.person])}</strong><span class="mu">${s.date.split('-').reverse().join('/')} · ${esc(s.day)}</span></div><details><summary>${s.sets} séries · Ver registros</summary>${logs.map(l=>`<p>${esc(l.exercise)} · Série ${l.set+1}: ${l.weight} kg × ${l.reps} ${l.unit}${l.imported?' · importado':''}</p>`).join('')}${notes.map(n=>`<p>${esc(n.exercise)}: ${esc(n.text)}</p>`).join('')}</details></article>`}).join(''):'<p class="mu">Seu primeiro treino concluído aparecerá aqui.</p>'}</section><section class="card"><h2>Evolução de carga</h2><div class="row"><label class="field" style="flex:1">Pessoa<select id="chart-person">${setting('names').map((n,i)=>`<option value="${i}" ${who===i?'selected':''}>${esc(n)}</option>`).join('')}</select></label><label class="field" style="flex:2">Exercício<select id="chart-exercise"></select></label></div><div id="chart"></div></section><section class="card"><h2>Backup por texto</h2><p class="mu">Inclui os dois perfis e a ficha. O código privado do casal não entra no backup.</p><textarea id="backup" class="backup" aria-label="Texto de backup" placeholder="Gere um backup ou cole aqui o texto para restaurar."></textarea><button class="btn s" id="backup-generate">Gerar e copiar backup</button><button class="btn s" id="backup-restore">Restaurar backup</button><p id="backup-status" class="mu" role="status"></p><details class="instruction"><summary>Importar arquivo da primeira versão ▾</summary><p>Seus registros antigos permanecem preservados no navegador. Para migrar um backup JSON da primeira versão, use a mesma origem antes de limpar os dados. Os backups desta versão usam o formato v3 acima.</p></details></section>`;}
 function chartOptions(selected){const person=+$('#chart-person').value,names=[...new Set(items('log').filter(l=>l.person===person).map(l=>l.exercise))].sort();$('#chart-exercise').innerHTML=names.length?names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join(''):'<option value="">Sem registros</option>';if(names.includes(selected))$('#chart-exercise').value=selected;drawChart();}
 function drawChart(){const person=+$('#chart-person').value,name=$('#chart-exercise').value,by={};for(const l of items('log'))if(l.person===person&&l.exercise===name)by[l.date]=Math.max(by[l.date]??0,l.weight);const ds=Object.keys(by).sort(),vs=ds.map(d=>by[d]);if(ds.length<2){$('#chart').innerHTML='<p class="mu">Registre ao menos dois dias para ver a evolução.</p>';return;}let low=Math.min(...vs),high=Math.max(...vs);if(low===high){low=Math.max(0,low-1);high++;}const pts=ds.map((d,i)=>`${45+i*285/(ds.length-1)},${115-(by[d]-low)/(high-low)*85}`);$('#chart').innerHTML=`<svg viewBox="0 0 360 155" role="img" aria-label="Evolução da carga máxima por dia de ${esc(name)}"><path d="M45 25V120H340" stroke="var(--bd)" fill="none"/><text x="0" y="32" fill="var(--mu)" font-size="10">${high} kg</text><text x="0" y="118" fill="var(--mu)" font-size="10">${low} kg</text><polyline fill="none" stroke="var(--ac)" stroke-width="3" points="${pts.join(' ')}"/>${pts.map((p,i)=>`<circle cx="${p.split(',')[0]}" cy="${p.split(',')[1]}" r="4" fill="var(--ac)"><title>${ds[i]}: ${vs[i]} kg</title></circle>`).join('')}<text x="45" y="145" fill="var(--mu)" font-size="10">${ds[0].split('-').reverse().join('/')}</text><text x="330" y="145" text-anchor="end" fill="var(--mu)" font-size="10">${ds.at(-1).split('-').reverse().join('/')}</text></svg><details class="instruction"><summary>Ver valores em tabela ▾</summary><table class="chart-table"><thead><tr><th>Data</th><th>Carga máxima</th></tr></thead><tbody>${ds.map(d=>`<tr><td>${d.split('-').reverse().join('/')}</td><td>${by[d]} kg</td></tr>`).join('')}</tbody></table></details>`;}
@@ -96,6 +145,7 @@ $('#view').onchange=e=>{
 $('#view').onclick=async e=>{
   const button=e.target.closest('button');if(!button||button.disabled)return;
   try{
+    if(button.dataset.rankingPeriod){rankingPeriod=button.dataset.rankingPeriod;render();return;}
     if(button.dataset.demo!==undefined){showDemo(parsePlan(setting('plan')).groups[day][+button.dataset.demo]);return;}
     if(button.dataset.jump!==undefined){const target=document.getElementById('exercise-'+Number(button.dataset.jump));target?.scrollIntoView({behavior:'smooth',block:'start'});return;}
     if(button.id==='go-next'){const target=$('#view .set:not(.done)')||$('#finish');target?.scrollIntoView({behavior:'smooth',block:'center'});target?.querySelector('input:not(:disabled)')?.focus({preventScroll:true});return;}
